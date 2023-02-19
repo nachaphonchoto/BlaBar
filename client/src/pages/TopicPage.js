@@ -1,5 +1,3 @@
-
-import Topic from '../components/Topic';
 import Search from '../components/Search';
 import initialDetails from '../initialDetails';
 
