@@ -12,7 +12,7 @@ export default function Topic({title, room}) {
 
   return (
     <div onClick={() => navigate('Chat/' + room)} >
-      <Card sx={{ maxWidth: 345 }}>
+      <Card >
       <CardActionArea>
         <CardMedia
           component="img"

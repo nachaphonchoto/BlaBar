@@ -3,6 +3,8 @@ const app = express();
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
+const connectDB = require('./config/db')
+connectDB()
 app.use(cors());
 
 const server = http.createServer(app);

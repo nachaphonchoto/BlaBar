@@ -8,9 +8,9 @@ function SearchList({ filteredTopics }) {
   const filtered = 
   
   <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+      <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 20 }}>
         {filteredTopics.map(topic =>  (
-          <Grid item xs={2} sm={4} md={4} >
+          <Grid item xs={2} sm={5} md={4} >
             <Topic title={topic.title} room={topic.room} />
           </Grid>
         ))}

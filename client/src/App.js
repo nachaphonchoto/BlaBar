@@ -101,7 +101,7 @@ function App() {
                         {pages.map((page) => (
                         <MenuItem key={page} onClick={handleCloseNavMenu}>
                             <Typography textAlign="center">
-                                <Link to="/test">{page}</Link>
+                                <Link style={{textDecoration: 'none', color: '#000'}} to={'/'+ page}> {page} </Link>
                             </Typography>
                         </MenuItem>
                         ))}
@@ -128,7 +128,7 @@ function App() {
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                     {pages.map((page) => (
-                        <Link to={'/'+ page}>
+                        <Link style={{textDecoration: 'none'}} to={'/'+ page}>
                             <Button
                                 key={page}
                                 onClick={handleCloseNavMenu}
