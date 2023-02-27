@@ -4,6 +4,10 @@ const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
 const connectDB = require('./config/db')
+
+const topic = require('./routes/api/topic')
+const chat = require('./routes/api/chat')
+
 connectDB()
 app.use(cors());
 
@@ -37,6 +41,13 @@ io.on("connection", (socket) => {
     console.log("User Disconnected", socket.id);
   });
 });
+
+app.use(express.json({
+  extended:false
+}))
+
+app.use('/api/topic', topic)
+app.use('/api/chat', chat)
 
 server.listen(3001, () => {
   console.log("SERVER RUNNING");
