@@ -11,7 +11,7 @@ function SearchList({ filteredTopics }) {
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 20 }}>
         {filteredTopics.map(topic =>  (
           <Grid item xs={2} sm={5} md={4} >
-            <Topic title={topic.title} room={topic.room} />
+            <Topic title={topic.title} _id={topic._id} />
           </Grid>
         ))}
       </Grid>

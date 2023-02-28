@@ -6,12 +6,12 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-export default function Topic({title, room}) {
+export default function Topic({title, _id}) {
 
   let navigate = useNavigate();
 
   return (
-    <div onClick={() => navigate('Chat/' + room)} >
+    <div onClick={() => navigate('Chat/' + _id)} >
       <Card >
       <CardActionArea>
         <CardMedia

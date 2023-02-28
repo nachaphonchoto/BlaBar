@@ -1,7 +1,9 @@
 const express = require('express');
 const Topic = require('../../models/Topic')
+const zlib = require('zlib');
 
 const router = express.Router();
+
 
 router.post('/', async (req, res) => {
 
@@ -38,6 +40,28 @@ router.get('/:id', async (req, res) => {
       console.error(err.message);
       res.status(500).send('Server Error');
     }
+});
+
+
+router.get('/', async (req, res) => {
+  try {
+    const topic = await Topic.find();
+    const jsonStr = JSON.stringify(topic);
+    zlib.gzip(jsonStr, (err, buffer) => {
+      if (!err) {
+        res.writeHead(200, {
+          'Content-Type': 'application/json',
+          'Content-Encoding': 'gzip'
+        });
+        res.end(buffer);
+      } else {
+        console.error(err);
+      }
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 });
 
 

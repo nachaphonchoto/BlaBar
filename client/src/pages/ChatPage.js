@@ -1,7 +1,8 @@
 import io from "socket.io-client";
 import Chat from "../components/Chat";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from 'axios';
 
 
 const socket = io.connect("http://localhost:3001");
@@ -10,24 +11,25 @@ const socket = io.connect("http://localhost:3001");
 export default function ChatPage () {
 
     
-    let {room} = useParams();
-    
+    let {_id} = useParams();
     const [username] = useState("Nut");
     const [showChatTab, setShowChatTab] = useState(false);
+    const [topic, setTopic] = useState([]);
+    
+
+    useEffect(() => {
+        axios.get(`http://localhost:3001/api/topic/${_id}`)
+          .then(response => {
+            setTopic(response.data);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }, []);
 
     const joinRoom = () => {
-        if (username !== "" && room !== "") {
-        socket.emit("join_room", room);
-        const messageJoined = {
-            room: room,
-            author: username,
-            message: `${username} มาแล้วนะทุกคน ^^`,
-            time:
-            new Date(Date.now()).getHours() +
-            ":" +
-            new Date(Date.now()).getMinutes(),
-        };
-        socket.emit("already_joined", messageJoined);
+        if (username !== "" && topic.room !== "") {
+        socket.emit("join_room", topic.room);
         setShowChatTab(true) ;
         }
     };
@@ -42,7 +44,7 @@ export default function ChatPage () {
                 </div>
                 
             ):(
-                <Chat socket={socket} username={username} room={room} />
+                <Chat socket={socket} username={username} room={topic.room} id={topic._id}/>
             )}
         </div>
     )

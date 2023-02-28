@@ -6,6 +6,8 @@ const { createChatMessage } = require('../../service/chat-service');
 
 const router = express.Router();
 
+const zlib = require('zlib');
+
 router.post('/:room',  
 [
   body('sender').notEmpty().isString(),
@@ -33,6 +35,30 @@ router.post('/:room',
       }
 
       return res.status(500).send('Server error');
+  }
+});
+
+router.get('/:id', async (req, res) => {
+  try {
+    const chatId = await Topic.findById(req.params.id).select('chat');
+    const chatTest = chatId.chat
+    const chatPromises = chatTest.map(chat => Chat.findById(chat));
+    const chats = await Promise.all(chatPromises);
+    const jsonStr = JSON.stringify(chats);
+    zlib.gzip(jsonStr, (err, buffer) => {
+      if (!err) {
+        res.writeHead(200, {
+          'Content-Type': 'application/json',
+          'Content-Encoding': 'gzip'
+        });
+        res.end(buffer);
+      } else {
+        console.error(err);
+      }
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
   }
 });
 

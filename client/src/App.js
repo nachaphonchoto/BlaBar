@@ -47,7 +47,7 @@ function App() {
   
     return (
         <div>
-        <AppBar position="static">
+        <AppBar position="sticky">
                 <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -181,7 +181,7 @@ function App() {
                 <Route path="Home" element={<HomePage/>} />
                 <Route path="Topic" element={<TopicPage />} />
                 <Route path="Topic/Chat" >
-                    <Route path=":room" element={<ChatPage />} />
+                    <Route path=":_id" element={<ChatPage />} />
                 </Route>
                 <Route path="Schedule" element={<SchedulePage />} />
                 <Route path="Map/*" element={<MapPage />} >

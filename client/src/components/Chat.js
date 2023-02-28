@@ -17,8 +17,9 @@ import Divider from '@mui/material/Divider';
 import ScrollToBottom from "../ScrollToBottom ";
 
 import { useEffect, useState } from "react";
+import axios from 'axios';
 
-export default function Chat({ socket, username, room }) {
+export default function Chat({ socket, username, room, id }) {
   
 const [currentMessage, setCurrentMessage] = useState("");
 const [messageList, setMessageList] = useState([]);
@@ -27,25 +28,49 @@ const sendMessage = async () => {
   if (currentMessage !== "") {
     const messageData = {
       room: room,
-      author: username,
+      sender: username,
       message: currentMessage,
       time:
         new Date(Date.now()).getHours() +
         ":" +
         new Date(Date.now()).getMinutes(),
     };
+ 
 
     await socket.emit("send_message", messageData);
     setMessageList((list) => [...list, messageData]);
     setCurrentMessage("");
+
+    axios.post(`http://localhost:3001/api/chat/${room}`, messageData)
+    .then(response => {
+      console.log(response.data)
+    })
+    .catch(error => {
+      console.log(error);
+    });
+    
   }
 };
 
 useEffect(() => {
   socket.on("receive_message", (data) => {
     setMessageList((list) => [...list, data]);
+    console.log("receive_message : " + data);
   });
+
+  console.log(socket)
 }, [socket]);
+
+useEffect(() => {
+  axios.get(`http://localhost:3001/api/chat/${id}`)
+    .then(response => {
+      setMessageList(response.data);
+      console.log(response.data)
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}, []);
 
 
   return (
@@ -69,7 +94,7 @@ useEffect(() => {
                 <ListItemAvatar>
                   <Avatar alt="Profile Picture"  />
                 </ListItemAvatar>
-                <ListItemText primary={messageContent.author} secondary={messageContent.message} />
+                <ListItemText primary={messageContent.sender} secondary={messageContent.message} />
               </ListItem>
             </React.Fragment>
           ))}
@@ -85,7 +110,7 @@ useEffect(() => {
             >
             <InputBase
               sx={{ ml: 1, flex: 1 }}
-              placeholder="Hi..."
+              placeholder="ข้อความ..."
               value={currentMessage}
               onChange={(event) => {
                   setCurrentMessage(event.target.value);
