@@ -25,7 +25,7 @@ export default function ChatPage () {
           .catch(error => {
             console.log(error);
           });
-      }, []);
+      }, [_id]);
 
     const joinRoom = () => {
         if (username !== "" && topic.room !== "") {

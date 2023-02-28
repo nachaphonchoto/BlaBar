@@ -9,6 +9,8 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import { Route, Outlet, Routes, Navigate } from "react-router-dom";
 
+import Box from '@mui/material/Box';
+
 export default function MapPage() {
     let {map} = useParams()
     let navigate = useNavigate();
@@ -20,26 +22,29 @@ export default function MapPage() {
 
     return(
         <div className="MapPage">
-            <Outlet/>
-            <BottomNavigation sx={{ width: 500 }} value={value} onChange={handleChange}>
-            <BottomNavigationAction
-                onClick={() => navigate('Location')}
-                label="Location"
-                value="Location"
-                icon={<MapIcon />}
-            />
-            <BottomNavigationAction
-                onClick={() => navigate('Event')}
-                label="Event map"
-                value="Event"
-                icon={<MapsHomeWorkIcon />}
-            />
-            </BottomNavigation>
-            <Routes>
-                <Route path="/" element={<Navigate to="Location" replace />} />
-                <Route path="Location" element={<Map/>} />
-                <Route path="Event" element={<Event />} />
-            </Routes>
+            <Box sx={{ p: 4}}>
+                <Outlet/>
+                <BottomNavigation sx={{ width: 500 }} value={value} onChange={handleChange}>
+                <BottomNavigationAction
+                    onClick={() => navigate('Location')}
+                    label="Location"
+                    value="Location"
+                    icon={<MapIcon />}
+                />
+                <BottomNavigationAction
+                    onClick={() => navigate('Event')}
+                    label="Event map"
+                    value="Event"
+                    icon={<MapsHomeWorkIcon />}
+                />
+                </BottomNavigation>
+                <Routes>
+                    <Route path="/" element={<Navigate to="Location" replace />} />
+                    <Route path="Location" element={<Map/>} />
+                    <Route path="Event" element={<Event />} />
+                </Routes>  
+            </Box>
+            
         </div>
     )
 }

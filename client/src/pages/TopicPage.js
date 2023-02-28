@@ -2,6 +2,8 @@ import Search from '../components/Search';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import Box from '@mui/material/Box';
+
 
 export default function TopicPage () {
 
@@ -22,7 +24,9 @@ export default function TopicPage () {
     
     return(
         <div className='TopicPage'>
-             <Search topics={topics}/>
+          <Box sx={{ p: 4}}>
+            <Search topics={topics}/>
+          </Box>
         </div>
     )
 }

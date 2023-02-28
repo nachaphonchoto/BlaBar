@@ -17,6 +17,8 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import HowToVoteIcon from '@mui/icons-material/HowToVote';
 
+import Box from '@mui/material/Box';
+
 const items = [
   {
     id: 1,
@@ -85,33 +87,36 @@ export default function SchedulePage() {
 
   return (
     <div className='SchedulePage'>
-        <Timeline position="alternate">
-        {items.map(({id,title,time,detail,icon}) => (
-            <TimelineItem>
-              <TimelineOppositeContent
-                sx={{ m: 'auto 0' }}
-                variant="body2"
-                color="text.secondary"
-              >
-                {time}
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <TimelineConnector />
-                <TimelineDot color="primary">
-                  {icon}
-                </TimelineDot>
-                <TimelineConnector />
-              </TimelineSeparator>
-              <TimelineContent sx={{ py: '12px', px: 2 }}>
-                <Typography variant="h6" component="span">
-                  {title}
-                </Typography>
-                <Typography>{detail}</Typography>
-              </TimelineContent>
-            </TimelineItem>
-          )
-        )}
-      </Timeline>
+      <Box sx={{ p: 4}}>
+          <Timeline position="alternate">
+          {items.map(({id,title,time,detail,icon}) => (
+              <TimelineItem>
+                <TimelineOppositeContent
+                  sx={{ m: 'auto 0' }}
+                  variant="body2"
+                  color="text.secondary"
+                >
+                  {time}
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                  <TimelineConnector />
+                  <TimelineDot color="primary">
+                    {icon}
+                  </TimelineDot>
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent sx={{ py: '12px', px: 2 }}>
+                  <Typography variant="h6" component="span">
+                    {title}
+                  </Typography>
+                  <Typography>{detail}</Typography>
+                </TimelineContent>
+              </TimelineItem>
+            )
+          )}
+        </Timeline>
+      </Box>
+        
     </div>
     
   );

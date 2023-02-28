@@ -6,6 +6,8 @@ import InputBase from '@mui/material/InputBase';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 
+import Box from '@mui/material/Box';
+
 function Search({ topics }) {
 
   const [searchField, setSearchField] = useState("");
@@ -47,7 +49,10 @@ function Search({ topics }) {
           <SearchIcon />
         </IconButton>
       </Paper>
-      {searchList()}
+      <Box sx={{ p: 2}}>
+        {searchList()}
+      </Box>
+      
     </section>
   );
 }
