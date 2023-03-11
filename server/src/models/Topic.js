@@ -1,13 +1,15 @@
 const mongoose = require('mongoose')
 const Chat = require('./Chat')
+const User = require("./User");
 const TopicSchema = new mongoose.Schema({
     title:{
         type: String, 
         required: true 
     },
-    speaker:{
-        type:String,
-        required: true,
+    userId:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Chat',
+        required: true 
     },
     detail:{
         type: String,
@@ -15,11 +17,6 @@ const TopicSchema = new mongoose.Schema({
     date:{
         type:Date,
         default: Date.now
-    },
-    room: {
-        type:String,
-        required: true,
-        unique: true
     },
     chat:[{
         type: mongoose.Schema.Types.ObjectId,

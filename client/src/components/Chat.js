@@ -19,7 +19,7 @@ import ScrollToBottom from "../ScrollToBottom ";
 import { useEffect, useState } from "react";
 import axios from 'axios';
 
-export default function Chat({ socket, username, room, id }) {
+export default function Chat({ socket, username, room, id, image }) {
   
 const [currentMessage, setCurrentMessage] = useState("");
 const [messageList, setMessageList] = useState([]);
@@ -30,10 +30,8 @@ const sendMessage = async () => {
       room: room,
       sender: username,
       message: currentMessage,
-      time:
-        new Date(Date.now()).getHours() +
-        ":" +
-        new Date(Date.now()).getMinutes(),
+      time: new Date(Date.now()),
+      imageURL: image
     };
  
 
@@ -70,29 +68,30 @@ useEffect(() => {
     .catch(error => {
       console.log(error);
     });
-}, []);
+}, [id]);
 
 
   return (
+    
     <React.Fragment>
       <CssBaseline />
       <Paper square sx={{ pb: "50px" }}>
-        <Typography
+        {/* <Typography
           variant="h5"
           gutterBottom
           component="div"
           sx={{ p: 2, pb: 0 }}
         >
           {room}
-        </Typography>
-        
+        </Typography> */}
+      
       <ScrollToBottom>
         <List sx={{ mb: 2 }}>
           {messageList.map((messageContent) => (
             <React.Fragment >
               <ListItem button>
                 <ListItemAvatar>
-                  <Avatar alt="Profile Picture"  />
+                  <Avatar src={messageContent.imageURL}  />
                 </ListItemAvatar>
                 <ListItemText primary={messageContent.sender} secondary={messageContent.message} />
               </ListItem>
@@ -122,7 +121,7 @@ useEffect(() => {
                 }
               }}
             />
-              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+              <Divider sx={{ height: 28, m: 0.5 }}  orientation="vertical" />
               <IconButton color="primary" sx={{ p: '10px' }} onClick={sendMessage} aria-label="directions">
                 <SendIcon />
               </IconButton>

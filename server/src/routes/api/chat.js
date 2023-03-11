@@ -2,16 +2,15 @@ const express = require('express');
 const { body, validationResult } = require('express-validator')
 const Topic = require('../../models/Topic')
 const Chat = require('../../models/Chat')
-const { createChatMessage } = require('../../service/chat-service');
+const auth = require("../../middleware/auth");
+
 
 const router = express.Router();
 
-const zlib = require('zlib');
 
-router.post('/:room',  
+router.post('/:id', auth ,  
 [
-  body('sender').notEmpty().isString(),
-  body('message').notEmpty().isString()
+  body('message').notEmpty().isString(),
 ],
  async (req, res) => {
 
@@ -20,19 +19,22 @@ router.post('/:room',
     return res.status(400).json({ errors: errors.array() });
   }
 
-  const { sender, message} = req.body;
-  const room = req.params.room;
+  const {  message } = req.body;
 
   try {
-    const chatMessage = await createChatMessage(Topic, Chat, room, sender, message);
-    return res.status(200).json({ message: 'Chat message sent successfully', chatMessage });
+    const topic = await Topic.findById(req.params.id);
+    const chat = new Chat({
+      message: message,
+      user: req.user.id
+    });
+    await chat.save();
+    topic.chat.push(chat);
+    await topic.save();
+
+    return res.status(200).json({ message: 'Chat message sent successfully', chat });
 
   } catch (err) {
     console.error(err);
-
-      if (err.name === 'ValidationError') {
-        return res.status(400).json({ errors: err.errors });
-      }
 
       return res.status(500).send('Server error');
   }
@@ -44,18 +46,7 @@ router.get('/:id', async (req, res) => {
     const chatTest = chatId.chat
     const chatPromises = chatTest.map(chat => Chat.findById(chat));
     const chats = await Promise.all(chatPromises);
-    const jsonStr = JSON.stringify(chats);
-    zlib.gzip(jsonStr, (err, buffer) => {
-      if (!err) {
-        res.writeHead(200, {
-          'Content-Type': 'application/json',
-          'Content-Encoding': 'gzip'
-        });
-        res.end(buffer);
-      } else {
-        console.error(err);
-      }
-    });
+    res.json(chats);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
