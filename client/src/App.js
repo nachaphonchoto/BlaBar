@@ -5,6 +5,7 @@ import TopicPage from "./pages/TopicPage";
 import ChatPage from "./pages/ChatPage";
 import SchedulePage from "./pages/SchedulePage";
 import MapPage from "./pages/MapPage";
+import LoginPage from "./pages/LoginPage";
 
 
 import * as React from 'react';
