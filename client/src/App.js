@@ -23,7 +23,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Home', 'Topic', 'Schedule', 'Map'];
+const pages = ['Home', 'Topic', 'Schedule', 'Map', 'Login'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 
@@ -179,6 +179,7 @@ function App() {
             </div>
             <Routes>
                 <Route path="/" element={<Navigate to="/Home" replace />} />
+                <Route path="login" element={<LoginPage/>} />
                 <Route path="Home" element={<HomePage/>} />
                 <Route path="Topic" element={<TopicPage />} />
                 <Route path="Topic/Chat" >

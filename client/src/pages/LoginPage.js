@@ -1,35 +1,12 @@
-import React, {useEffect, useState} from "react";
-import GoogleLogin from "react-google-login";
-import { gapi } from "gapi-script";
+import React, { useState } from "react";
 import "./LoginPage.css"
 
-const LoginForm = () => {
-
-    useEffect(() => {
-        function start() {
-            gapi.client.init({
-                clientId: "",
-                scope: ""
-            })
-        }
-        gapi.load('client: auth2', start)
-    })
+const LoginPage = () => {
 
     const [popupStyle, showPopup] = useState("hide")
-
     const popup = () => {
         showPopup("login-popup")
         setTimeout(() => showPopup("hide"), 3000)
-    }
-
-    const onSuccess = e => {
-        alert("User signed in")
-        console.log(e)
-    }
-
-    const onFailure = e => {
-        alert("User sign in Failed")
-        console.log(e)
     }
 
     return (
@@ -44,27 +21,15 @@ const LoginForm = () => {
 
             <div className="alt-login">
                 <div className="facebook"></div>
-                <div className="google">
-                    <GoogleLogin className="blue"
-                        clientId=""
-                        buttonText=""
-                        onSuccess={onSuccess}
-                        onFailure={onFailure}
-                        cookiePolicy={'single_host_origin'}
-                        isSignedIn={false} // alternative is true, which keeps the user signed in
-                        icon={false}    // alt is true, and this puts the google logo on your button, but I don't like it
-                        theme="dark"  // alternative is light, which is white
-                    />
-                </div>
+                <div className="google"></div>
             </div>
-
-            <div className={popupStyle}>
+            <div className="{popupStyle">
                 <h3>Login Failed</h3>
                 <p>Username or password incorrect</p>
             </div>
-            
         </div>
     )
 }
 
-export default LoginForm
+
+export default LoginPage
