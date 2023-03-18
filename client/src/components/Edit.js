@@ -4,7 +4,6 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 import { useState } from "react";
@@ -70,10 +69,6 @@ export default function Edit({_id, titletmp, detailtmp}) {
       <Dialog open={open} onClose={handleClose} fullWidth>
         <DialogTitle>แก้ไขหัวข้อ : {titletmp}</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            
-          </DialogContentText>
-          
           <Box component="form" onSubmit={handleSubmit} sx={{ p: 1}}>
             <TextField  
               margin="normal"

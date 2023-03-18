@@ -18,7 +18,6 @@ export default function Detail ( {data} ) {
                         spacing={2}
                     >
                         <Avatar  
-                        alt="Remy Sharp"
                         // src={image}
                         sx={{ width: 80, height: 80 }} />
                         <div>
