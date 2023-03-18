@@ -3,25 +3,61 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import swal from 'sweetalert';
+import axios from 'axios';
+import { useState } from "react";
 
 const theme = createTheme();
 
 export default function RegisterPage() {
+
+    const [firstName, setFirstName] = useState();
+    const [lastName, setLastName] = useState();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    let data = {
+        name: firstName + ' ' + lastName,
+        email: email,
+        password: password
+    }
+    try {
+        axios.post(`http://localhost:3001/api/users`, data, {
+            headers: {
+            'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if ('token' in response.data) {
+                swal("สำเร็จ",  "สมัครสมาชิกเรียบร้อย" ,"success", {
+                  buttons: false,
+                  timer: 2000,
+                })
+                .then(() => {
+                  localStorage.setItem('token', response.data.token);
+                  window.location.href = "/";
+                });
+              } else {
+                swal("ผิดพลาด", "เกิดข้อผิดพลาด ", "error");
+              }
+        })
+        .catch(error => {
+            swal("ผิดพลาด", "เกิดข้อผิดพลาด", "error");
+        });
+      
+      
+    } catch (error) {
+      swal("ผิดพลาด", "เกิดข้อผิดพลาด", "error");
+    }
   };
 
   return (
@@ -53,6 +89,7 @@ export default function RegisterPage() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  onChange={e => setFirstName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -63,6 +100,7 @@ export default function RegisterPage() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  onChange={e => setLastName(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -73,6 +111,7 @@ export default function RegisterPage() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={e => setEmail(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -84,6 +123,7 @@ export default function RegisterPage() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={e => setPassword(e.target.value)}
                 />
               </Grid>
             </Grid>

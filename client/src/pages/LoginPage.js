@@ -36,7 +36,7 @@ export default function LoginPage() {
             })
             .then(response => {
                 if ('token' in response.data) {
-                    swal("Success",  "success" ,"success", {
+                    swal("สำเร็จ",  "เข้าสู่ระบบเรียบร้อย" ,"success", {
                       buttons: false,
                       timer: 2000,
                     })
@@ -45,16 +45,16 @@ export default function LoginPage() {
                       window.location.href = "/";
                     });
                   } else {
-                    swal("Failed", "An error ", "error");
+                    swal("ผิดพลาด", "เกิดข้อผิดพลาด ", "error");
                   }
             })
             .catch(error => {
-                swal("Failed", "An error ", "error");
+                swal("ผิดพลาด", "เกิดข้อผิดพลาด", "error");
             });
           
           
         } catch (error) {
-          swal("Failed", "An error occurred", "error");
+          swal("ผิดพลาด", "เกิดข้อผิดพลาด", "error");
         }
       }
       
