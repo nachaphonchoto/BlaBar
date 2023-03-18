@@ -63,11 +63,11 @@ router.delete('/:id', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
 
-    if (!user.topics.includes(req.params.id)) {
+    if (!user.topic.includes(req.params.id)) {
       return res.status(404).json({ msg: 'Topic not found' });
     }
 
-    user.topics.pull(req.params.id);
+    user.topic.pull(req.params.id);
     await user.save();
 
     const topic = await Topic.findById(req.params.id);

@@ -24,7 +24,7 @@ export default function Topic({title, _id, mode, detail}) {
             <CardMedia
               component="img"
               height="140"
-              image="https://www.adobe.com/content/dam/cc/us/en/products/creativecloud/photography/hub/CODERED_B1_macro_hero-img_900x420.jpg.img.jpg"
+              image="https://png.pngtree.com/thumb_back/fh260/background/20201009/pngtree-light-blue-background-design-image_405678.jpg"
               alt="green iguana"
             />
             <CardContent>
@@ -43,7 +43,7 @@ export default function Topic({title, _id, mode, detail}) {
             <CardMedia
               component="img"
               height="140"
-              image="https://www.adobe.com/content/dam/cc/us/en/products/creativecloud/photography/hub/CODERED_B1_macro_hero-img_900x420.jpg.img.jpg"
+              image="https://png.pngtree.com/thumb_back/fh260/background/20201009/pngtree-light-blue-background-design-image_405678.jpg"
               alt="green iguana"
             />
             <CardContent>
