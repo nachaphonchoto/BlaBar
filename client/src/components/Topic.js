@@ -28,10 +28,10 @@ export default function Topic({title, _id, mode, detail}) {
               alt="green iguana"
             />
             <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography noWrap gutterBottom variant="h5" component="div">
                 {title}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography noWrap variant="body2" color="text.secondary">
                 {detail}
               </Typography>
             </CardContent>
