@@ -44,7 +44,7 @@ export default function Edit({_id, titletmp, detailtmp}) {
         })
         .then(response => {
             if ('success' === response.data) {
-                swal("สำเร็จ",  "เพิ่มหัวข้อสำเร็จ" ,"success", {
+                swal("สำเร็จ",  "แก้ไขหัวข้อสำเร็จ" ,"success", {
                   buttons: false,
                   timer: 2000,
                 }).then(() => window.location.reload())
@@ -53,7 +53,7 @@ export default function Edit({_id, titletmp, detailtmp}) {
               }
         })
         .catch(error => {
-            swal("ผิดพลาด", "กรุณาใส่หัวข้อและรายละเอียด", "error");
+            swal("ผิดพลาด", "เกิดข้อผิดพลาด", "error");
         });
       
       
