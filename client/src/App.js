@@ -85,7 +85,6 @@ function App() {
         if(user) {
             setName(user.name);
             setAvatar(user.avatar); 
-            console.log(user.name);
         }
     }, [user]); 
 

@@ -5,10 +5,9 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Stack from '@mui/material/Stack';
 import Edit from './Edit';
+import Delete from './Delete';
 
 export default function Topic({title, _id, mode, detail}) {
 
@@ -20,7 +19,7 @@ export default function Topic({title, _id, mode, detail}) {
   return (
     <div>
       {mode === 0 ?
-        <Card onClick={() => navigate(`/Chat/${_id}`)} >
+        <Card onClick={toChat} >
           <CardActionArea>
             <CardMedia
               component="img"
@@ -58,9 +57,7 @@ export default function Topic({title, _id, mode, detail}) {
           </CardActionArea>
           <Stack sx={{ p: 1 }} direction="row" spacing={2} justifyContent="flex-end">
             <Edit _id={_id} titletmp={title} detailtmp={detail}/>
-            <IconButton color="error" >
-              <DeleteIcon />
-            </IconButton>
+            <Delete  _id={_id} titletmp={title} />
           </Stack>
           
         </Card>   
