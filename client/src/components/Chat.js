@@ -29,10 +29,11 @@ const token = localStorage.getItem('token');
 const sendMessage = async () => {
   if (currentMessage !== "") {
     const messageData = {
-      user: {name: username, avatar: image},
+      user: { name: username, avatar: image },
       message: currentMessage,
       time: new Date(Date.now()),
-      imageURL: image
+      imageURL: image,
+      room: id
     };
 
     const messagePayload = {
@@ -62,10 +63,10 @@ const sendMessage = async () => {
 
 useEffect(() => {
   socket.on("receive_message", (data) => {
+    console.log(data);
     setMessageList((list) => [...list, data]);
     console.log("receive_message : " + data);
   });
-
   console.log(socket)
 }, [socket]);
 

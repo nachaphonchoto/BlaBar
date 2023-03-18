@@ -4,14 +4,14 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';
 
 
-function SearchList({ filteredTopics }) {
+function SearchList({ filteredTopics, mode }) {
   const filtered = 
   
   <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 20 }}>
         {filteredTopics.map(topic =>  (
           <Grid item xs={2} sm={5} md={4} >
-            <Topic title={topic.title} _id={topic._id} />
+            <Topic title={topic.title} _id={topic._id} detail={topic.detail} mode={mode}/>
           </Grid>
         ))}
       </Grid>

@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const secret = require('../../config/default.json');
 const { check, validationResult } = require('express-validator');
 const auth = require("../../middleware/auth");
+const Topic = require('../../models/Topic');
 
 const router = express.Router();
 
@@ -68,6 +69,20 @@ router.get('/', auth , async (req, res) => {
     return res.status(500).send('Server error');
   }
 });
+
+router.get('/topic', auth , async (req, res) => {
+
+  try {
+    const user = await User.findById(req.user.id).select('topic');
+    const topics = await Topic.find({ _id: { $in: user.topic } }).select('title detail date');
+    res.status(200).json(topics);
+
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send('Server error');
+  }
+});
+
 
 module.exports = router;
 

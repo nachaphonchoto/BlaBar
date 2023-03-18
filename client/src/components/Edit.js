@@ -9,16 +9,16 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 import { useState } from "react";
 
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
 import swal from 'sweetalert';
 import axios from 'axios';
 
 
-export default function Popup() {
+export default function Edit({_id, titletmp, detailtmp}) {
   const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState();
-  const [detail, setDetail] = useState();
+  const [title, setTitle] = useState(titletmp);
+  const [detail, setDetail] = useState(detailtmp);
   const token = localStorage.getItem('token');
 
   const handleClickOpen = () => {
@@ -37,13 +37,13 @@ export default function Popup() {
     }
     
     try {
-        axios.post(`http://localhost:3001/api/topic`, data, {
+        axios.put(`http://localhost:3001/api/topic/${_id}`, data, {
             headers: {
               'x-auth-token': token
             }
         })
         .then(response => {
-            if ('Topic created successfully' === response.data.message) {
+            if ('success' === response.data) {
                 swal("สำเร็จ",  "เพิ่มหัวข้อสำเร็จ" ,"success", {
                   buttons: false,
                   timer: 2000,
@@ -64,11 +64,11 @@ export default function Popup() {
 
   return (
     <div>
-    <Fab size="small" color="secondary" aria-label="add" onClick={handleClickOpen}>
-        <AddIcon />
-    </Fab>
+    <IconButton color="primary"  onClick={handleClickOpen}>
+        <EditIcon />
+    </IconButton>
       <Dialog open={open} onClose={handleClose} fullWidth>
-        <DialogTitle>เพิ่มหัวข้อ</DialogTitle>
+        <DialogTitle>แก้ไขหัวข้อ : {titletmp}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             
@@ -81,6 +81,7 @@ export default function Popup() {
               id="outlined-basic" 
               label="ชื่อหัวข้อ" 
               variant="outlined" 
+              value={title}
               onChange={e => setTitle(e.target.value)}/>
             <TextField
               margin="normal"
@@ -90,6 +91,7 @@ export default function Popup() {
               fullWidth
               multiline
               rows={4}
+              value={detail}
               onChange={e => setDetail(e.target.value)}
             />
           </Box>

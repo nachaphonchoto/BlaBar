@@ -11,7 +11,7 @@ import Stack from '@mui/material/Stack';
 
 import Box from '@mui/material/Box';
 
-function Search({ topics }) {
+function Search({ topics , mode}) {
 
   const [searchField, setSearchField] = useState("");
 
@@ -32,7 +32,7 @@ function Search({ topics }) {
 
   function searchList() {
     return (
-        <SearchList filteredTopics={filteredTopics} />
+        <SearchList filteredTopics={filteredTopics} mode={mode} />
     );
   }
 

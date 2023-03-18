@@ -6,6 +6,7 @@ import ChatPage from "./pages/ChatPage";
 import SchedulePage from "./pages/SchedulePage";
 import MapPage from "./pages/MapPage";
 import AuthenticationPage from "./pages/AuthenticationPage";
+import ProfilePage from "./pages/ProfilePage";
 
 
 import * as React from 'react';
@@ -23,6 +24,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -42,6 +44,8 @@ function App() {
     const [avatar, setAvatar] = React.useState(null);
     const [user, setUser] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    let navigate = useNavigate();
 
     React.useEffect(() => { 
         if(token && !user){
@@ -207,7 +211,10 @@ function App() {
               onClose={handleCloseUserMenu}
             >
             <MenuItem onClick={handleCloseUserMenu}>
-                <Typography onClick={logout} textAlign="center">logout</Typography>
+                <Typography onClick={() => navigate('Profile')} textAlign="center">Profile</Typography>
+            </MenuItem>
+            <MenuItem onClick={handleCloseUserMenu}>
+                <Typography onClick={logout} textAlign="center">Logout</Typography>
             </MenuItem>
             </Menu>
           </Box>
@@ -228,6 +235,7 @@ function App() {
                 <Route path="Map/*" element={<MapPage />} >
                     <Route path=":map" />
                 </Route>
+                <Route path="Profile" element={<ProfilePage/>} />
                 {/* <Route path="Login" element={<Page setProfile={setProfile} />} /> */}
                 {/* <Route path="*" element={<NoPage />} /> */}
             </Routes>

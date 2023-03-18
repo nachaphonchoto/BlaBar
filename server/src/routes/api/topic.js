@@ -10,15 +10,15 @@ const router = express.Router();
 router.post('/', auth , async (req, res) => {
 
   try {
-    const user = await User.findById(req.user.id).select("topics");
+    const user = await User.findById(req.user.id).select("topic");
     const { title, detail } = req.body;
     const topic = new Topic({ 
         title: title,
-        userId: req.user.id,
+        user: req.user.id,
         detail: detail,
     });
     await topic.save();
-    user.topics.push(topic);
+    user.topic.push(topic);
     await user.save();
 
     res.status(200).send({ message: "Topic created successfully" });
@@ -32,7 +32,7 @@ router.post('/', auth , async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
       const topic = await Topic.findById(req.params.id);
-      const user = await User.findById(topic.userId._id).select(["name", "avatar"]);
+      const user = await User.findById(topic.user._id).select(["name", "avatar"]);
       const data = {
         title: topic.title,
         name: user.name,

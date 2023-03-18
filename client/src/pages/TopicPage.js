@@ -27,7 +27,7 @@ export default function TopicPage () {
     return(
         <div className='TopicPage'>
           <Box sx={{ p: 4}}>
-            <Search topics={topics}/>
+            <Search topics={topics} mode={0}/>
           </Box>
         </div>
     )

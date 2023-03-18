@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
         type:Date,
         default: Date.now
     },
-    topics:[{
+    topic:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'topic',
         default: []
