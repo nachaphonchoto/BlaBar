@@ -22,59 +22,66 @@ import Box from '@mui/material/Box';
 const items = [
   {
     id: 1,
-    title: 'start',
+    title: 'เริ่มลงทะเบียน',
     time: "8.30am",
-    detail: 'i dont know',
-    icon: <LaptopMacIcon />
+    detail: 'ให้ผู้เข้าร่วมสามารถลงชื่อเพื่อมาเข้าร่วมงานได้',
+    icon: <HowToRegIcon />
   },
   {
     id: 2,
-    title: 'start',
-    time: "8.30am",
-    detail: 'i dont know',
-    icon: <FastfoodIcon />
-  },
-  {
-    id: 3,
-    title: 'start',
-    time: "8.30am",
-    detail: 'i dont know',
-    icon: <CookieIcon />
-  },
-  {
-    id: 4,
-    title: 'start',
-    time: "8.30am",
-    detail: 'i dont know',
+    title: 'อาหารว่าง',
+    time: "9.30am",
+    detail: 'รับประทานอาหารว่าง กาแฟ น้ำชา และอื่นๆ',
     icon: <FreeBreakfastIcon />
   },
   {
+    id: 3,
+    title: 'เริ่มงาน',
+    time: "10.30am",
+    detail: 'ทำการเปิดงาน อธิบาย และพูดคุยกัน',
+    icon: <GroupsIcon />
+  },
+  {
+    id: 4,
+    title: 'ลงทะเบียนหัวข้อ',
+    time: "11.30am",
+    detail: 'เปิดให้มีการลงทะเบียนหัวข้อผู้ที่จะทำการพูด',
+    icon: <LaptopMacIcon />
+  },
+  {
     id: 5,
-    title: 'start',
-    time: "8.30am",
+    title: 'พักรับประทานอาหาร',
+    time: "12.30am",
+    detail: 'รับประทานอาหารกลางวัน น้ำดื่ม กาแฟ น้ำชา และอื่นๆ',
+    icon: <FastfoodIcon />
+  },
+  {
+    id: 6,
+    title: 'โหวตหัวข้อ',
+    time: "13.30am",
+    detail: 'ทำการโหวตหัวข้อที่สนใจ',
+    icon: <HowToVoteIcon />
+  },
+  {
+    id: 7,
+    title: 'พูดคุยแลกเปลี่ยนความคิดเห็น',
+    time: "14.30am",
     detail: 'i dont know',
     icon: <GroupsIcon />
   },
   {
-    id: 6,
-    title: 'end',
-    time: "8.30am",
-    detail: 'i dont know',
-    icon: <HowToRegIcon />
-  },
-  {
-    id: 7,
-    title: 'Bye',
-    time: "8.30am",
-    detail: 'i dont know',
-    icon: <EmojiEmotionsIcon />
-  },
-  {
     id: 8,
-    title: 'Bye',
-    time: "8.30am",
-    detail: 'i dont know',
-    icon: <HowToVoteIcon />
+    title: 'แจกของที่ระลึก',
+    time: "15.30am",
+    detail: 'รับของที่ระลึกติดไม้ติดมือกลับบ้าน',
+    icon: <CookieIcon />
+  },
+  {
+    id: 9,
+    title: 'ปิดงาน',
+    time: "16.30am",
+    detail: 'งานเลี้ยงย่อมมีวันเลิกลา แล้วพบกันใหม่',
+    icon: <EmojiEmotionsIcon />
   },
 
 ]

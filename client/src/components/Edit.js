@@ -14,6 +14,7 @@ import swal from 'sweetalert';
 import axios from 'axios';
 
 
+
 export default function Edit({_id, titletmp, detailtmp}) {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState(titletmp);

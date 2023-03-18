@@ -97,7 +97,6 @@ function App() {
         <AppBar position="sticky">
                 <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography
                     variant="h6"
                     noWrap
@@ -113,7 +112,7 @@ function App() {
                         textDecoration: 'none',
                     }}
                     >
-                    LOGO
+                    BlaBar
                     </Typography>
         
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
