@@ -38,8 +38,28 @@ function logout() {
 function App() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const token = localStorage.getItem('token');
-    const [user, setUser] = React.useState();
+    const [name, setName] = React.useState(null);
+    const [avatar, setAvatar] = React.useState(null);
+    const [user, setUser] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    React.useEffect(() => { 
+        if(token && !user){
+            axios.get(`http://localhost:3001/api/users`, {
+                headers: {
+                    'x-auth-token': token
+                }
+            })
+            .then(response => {
+                console.log(response.data);
+                setUser(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });   
+        }
+    }, [token, user]);
+    
 
   
     const handleOpenNavMenu = (event) => {
@@ -57,25 +77,17 @@ function App() {
         setAnchorElUser(null);
       };
 
+    React.useEffect(() => { 
+        if(user) {
+            setName(user.name);
+            setAvatar(user.avatar); 
+            console.log(user.name);
+        }
+    }, [user]); 
+
     if(!token) {
         return <AuthenticationPage />
-    } else {
-        if(!user){
-            axios.get(`http://localhost:3001/api/users`, {
-                headers: {
-                'x-auth-token': token
-                }
-            })
-            .then(response => {
-                console.log(response.data);
-                setUser(response.data);
-            })
-            .catch(error => {
-                console.log(error);
-            }); 
-        }
-    }
-
+    } 
   
     return (
         <div>
@@ -175,7 +187,7 @@ function App() {
                     <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp"  />
+                <Avatar src={avatar} alt="Remy Sharp"  />
               </IconButton>
             </Tooltip>
             <Menu

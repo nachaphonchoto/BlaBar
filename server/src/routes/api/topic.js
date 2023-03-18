@@ -61,10 +61,23 @@ router.get('/', async (req, res) => {
 
 router.delete('/:id', auth, async (req, res) => {
   try {
-    const chatId = await Topic.findById(req.params.id).select('chat');
-    const chatPromises = chatId.chat.filter(chat => Chat.findByIdAndDelete(chat));
-    const topic = await Topic.findByIdAndDelete(req.params.id);
-    res.status(200).send("success");
+    const user = await User.findById(req.user.id);
+
+    if (!user.topics.includes(req.params.id)) {
+      return res.status(404).json({ msg: 'Topic not found' });
+    }
+
+    user.topics.pull(req.params.id);
+    await user.save();
+
+    const topic = await Topic.findById(req.params.id);
+    const chatPromises = topic.chat.map(chatId => {
+      return Chat.findByIdAndDelete(chatId);
+    });
+    await Promise.all(chatPromises);
+    await Topic.findByIdAndDelete(req.params.id);
+    
+    res.status(200).json({ msg: 'Topic deleted' });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');

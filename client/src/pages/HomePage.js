@@ -5,7 +5,10 @@ import ImageMasonry from "../components/ImageMasonry";
 export default function HomePage () {
     return(
         <div className="HomePage">
-            <Box sx={{ p: 4}}>
+            <Box sx={{ p: 4 ,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',}}>
                 <h1> HomePage </h1>
                 <Carousel/>  
                 <ImageMasonry/> 

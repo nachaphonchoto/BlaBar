@@ -29,7 +29,7 @@ const token = localStorage.getItem('token');
 const sendMessage = async () => {
   if (currentMessage !== "") {
     const messageData = {
-      user: username,
+      user: {name: username, avatar: image},
       message: currentMessage,
       time: new Date(Date.now()),
       imageURL: image
@@ -107,9 +107,9 @@ useEffect(() => {
             <React.Fragment >
               <ListItem button>
                 <ListItemAvatar>
-                  <Avatar src={messageContent.imageURL}  />
+                  <Avatar src={messageContent.user.avatar}  />
                 </ListItemAvatar>
-                <ListItemText primary={messageContent.user} secondary={messageContent.message} />
+                <ListItemText primary={messageContent.user.name} secondary={messageContent.message} />
               </ListItem>
             </React.Fragment>
           ))}

@@ -87,7 +87,13 @@ export default function SchedulePage() {
 
   return (
     <div className='SchedulePage'>
-      <Box sx={{ p: 4}}>
+      <Box sx={{ p: 4 ,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',}}>
+            <h1>ตารางเวลา</h1>
+      </Box>
+      <Box >
           <Timeline position="alternate">
           {items.map(({id,title,time,detail,icon}) => (
               <TimelineItem>

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const User = require("./User");
+
 const ChatSchema = new mongoose.Schema({
     message:{
         type: String,
@@ -10,8 +10,8 @@ const ChatSchema = new mongoose.Schema({
         default: Date.now
     },
     user:{
-        type: mongoose.Schema.Types.String,
-        ref: 'User',
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
         default: []
     }
 })

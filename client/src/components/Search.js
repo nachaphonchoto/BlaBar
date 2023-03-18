@@ -37,24 +37,33 @@ function Search({ topics }) {
   }
 
   return (
-    <section className="garamond">
-      <Stack spacing={2} direction="row">
+    <section>
+      <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+      >
+        <Stack spacing={2} direction="row">
           <Paper
-          component="form"
-          sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
-        >
-          <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            placeholder="Search Topic"
-            inputProps={{ 'aria-label': 'search google maps' }}
-            onChange = {handleChange}
-          />
-          <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-            <SearchIcon />
-          </IconButton>
-        </Paper>
-        <Popup/>
-      </Stack>
+            component="form"
+            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+          >
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search Topic"
+              inputProps={{ 'aria-label': 'search google maps' }}
+              onChange = {handleChange}
+            />
+            <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+          </Paper>
+          <Popup/>
+        </Stack>
+      </Box>
+      
       
       <Box sx={{ p: 2}}>
         {searchList()}

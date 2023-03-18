@@ -3,7 +3,6 @@ const { body, validationResult } = require('express-validator')
 const Topic = require('../../models/Topic')
 const Chat = require('../../models/Chat')
 const auth = require("../../middleware/auth");
-const User = require('../../models/User');
 
 
 const router = express.Router();
@@ -24,10 +23,9 @@ router.post('/:id', auth ,
   
   try {
     const topic = await Topic.findById(req.params.id);
-    const user = await User.findById(req.user.id).select('name');
     const chat = new Chat({
       message: message,
-      user: user.name
+      user: req.user.id
     });
     await chat.save();
     topic.chat.push(chat);
@@ -42,12 +40,12 @@ router.post('/:id', auth ,
   }
 });
 
+
 router.get('/:id', async (req, res) => {
   try {
-    const chatId = await Topic.findById(req.params.id).select('chat');
-    const chatTest = chatId.chat
-    const chatPromises = chatTest.map(chat => Chat.findById(chat).select('-_id'))
-    const chats = await Promise.all(chatPromises);
+    const topic = await Topic.findById(req.params.id).select('chat');
+    const chats = await Chat.find({ _id: { $in: topic.chat } }).populate('user', ['name', 'avatar']);
+
     res.json(chats);
   } catch (err) {
     console.error(err.message);

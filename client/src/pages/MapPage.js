@@ -22,7 +22,11 @@ export default function MapPage() {
 
     return(
         <div className="MapPage">
-            <Box sx={{ p: 4}}>
+            <Box sx={{ p: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+            }}>
                 <Outlet/>
                 <BottomNavigation sx={{ width: 500 }} value={value} onChange={handleChange}>
                 <BottomNavigationAction

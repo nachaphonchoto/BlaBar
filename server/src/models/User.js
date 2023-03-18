@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Topic = require("./Topic");
+
 
 const UserSchema = new mongoose.Schema({
     name:{
@@ -24,7 +24,7 @@ const UserSchema = new mongoose.Schema({
     },
     topics:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Topic',
+        ref: 'topic',
         default: []
     }]
 })
