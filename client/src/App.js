@@ -5,7 +5,7 @@ import TopicPage from "./pages/TopicPage";
 import ChatPage from "./pages/ChatPage";
 import SchedulePage from "./pages/SchedulePage";
 import MapPage from "./pages/MapPage";
-import LoginPage from "./pages/LoginPage";
+import AuthenticationPage from "./pages/AuthenticationPage";
 
 
 import * as React from 'react';
@@ -58,7 +58,7 @@ function App() {
       };
 
     if(!token) {
-        return <LoginPage />
+        return <AuthenticationPage />
     } else {
         if(!user){
             axios.get(`http://localhost:3001/api/users`, {

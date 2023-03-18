@@ -58,9 +58,6 @@ export default function LoginPage() {
         }
       }
       
-      
-
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -78,7 +75,7 @@ export default function LoginPage() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            เข้าสู่ระบบ
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -109,7 +106,7 @@ export default function LoginPage() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              เข้าสู่ระบบ
             </Button>
           </Box>
         </Box>
