@@ -15,12 +15,10 @@ import Tooltip from '@mui/material/Tooltip';
 const socket = io.connect("http://localhost:3001");
 
 
-export default function ChatPage ({profile}) {
+export default function ChatPage () {
 
     
     let {_id} = useParams();
-    const [username] = useState(profile ? profile.profileObj.name : "anonymous");
-    const [image] = useState(profile ? profile.profileObj.imageUrl : "");
     const [showChatTab, setShowChatTab] = useState(false);
     const [topic, setTopic] = useState([]);
 
@@ -39,8 +37,8 @@ export default function ChatPage ({profile}) {
       }, [_id]);
 
     const joinRoom = () => {
-        if (username !== "" && topic.room !== "") {
-        socket.emit("join_room", topic.room);
+        if ( _id !== "") {
+        socket.emit("join_room", _id);
         setShowChatTab(true) ;
         }
     };
@@ -75,7 +73,7 @@ export default function ChatPage ({profile}) {
                         </Box>
                     </Grid>
                     <Grid item xs={6} md={4} style={{maxHeight: '100vh', overflow: 'auto'}}>
-                        <Chat socket={socket} username={username} room={topic.room} id={topic._id} image={image} />
+                        <Chat socket={socket} id={_id} />
                     </Grid>
                 </Grid>
             )}

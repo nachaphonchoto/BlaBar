@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
     
     const payload = {
       user: {
-        id: user.id,
+        id: user._id,
       },
     };
     
@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
       { expiresIn: "1h" },
       (err, token) => {
         if (err) throw err;
-        res.json({ token });
+        res.status(200).json({ token });
       }
     );
   } catch (err) {

@@ -3,6 +3,7 @@ const { body, validationResult } = require('express-validator')
 const Topic = require('../../models/Topic')
 const Chat = require('../../models/Chat')
 const auth = require("../../middleware/auth");
+const User = require('../../models/User');
 
 
 const router = express.Router();
@@ -20,12 +21,13 @@ router.post('/:id', auth ,
   }
 
   const {  message } = req.body;
-
+  
   try {
     const topic = await Topic.findById(req.params.id);
+    const user = await User.findById(req.user.id).select('name');
     const chat = new Chat({
       message: message,
-      user: req.user.id
+      user: user.name
     });
     await chat.save();
     topic.chat.push(chat);
@@ -36,7 +38,7 @@ router.post('/:id', auth ,
   } catch (err) {
     console.error(err);
 
-      return res.status(500).send('Server error');
+    return res.status(500).send('Server error');
   }
 });
 
@@ -44,7 +46,7 @@ router.get('/:id', async (req, res) => {
   try {
     const chatId = await Topic.findById(req.params.id).select('chat');
     const chatTest = chatId.chat
-    const chatPromises = chatTest.map(chat => Chat.findById(chat));
+    const chatPromises = chatTest.map(chat => Chat.findById(chat).select('-_id'))
     const chats = await Promise.all(chatPromises);
     res.json(chats);
   } catch (err) {

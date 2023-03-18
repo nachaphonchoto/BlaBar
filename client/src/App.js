@@ -5,7 +5,7 @@ import TopicPage from "./pages/TopicPage";
 import ChatPage from "./pages/ChatPage";
 import SchedulePage from "./pages/SchedulePage";
 import MapPage from "./pages/MapPage";
-
+import LoginPage from "./pages/LoginPage";
 
 
 import * as React from 'react';
@@ -16,28 +16,65 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import AdbIcon from '@mui/icons-material/Adb';
-
+import Tooltip from '@mui/material/Tooltip';
+import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
+import axios from 'axios';
+
+
 
 
 const pages = ['Home', 'Topic', 'Schedule', 'Map'];
 
+function logout() {
+    localStorage.clear();
+    window.location.reload();
+}
+
 
 function App() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const token = localStorage.getItem('token');
+    const [user, setUser] = React.useState();
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   
     const handleOpenNavMenu = (event) => {
-      setAnchorElNav(event.currentTarget);
-    };
-   
-  
-    const handleCloseNavMenu = () => {
-      setAnchorElNav(null);
-    };
+        setAnchorElNav(event.currentTarget);
+      };
+      const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+      };
+    
+      const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
+      };
+    
+      const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+      };
+
+    if(!token) {
+        return <LoginPage />
+    } else {
+        if(!user){
+            axios.get(`http://localhost:3001/api/users`, {
+                headers: {
+                'x-auth-token': token
+                }
+            })
+            .then(response => {
+                console.log(response.data);
+                setUser(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            }); 
+        }
+    }
 
   
     return (
@@ -135,7 +172,33 @@ function App() {
                         
                     ))}
                     </Box>
-
+                    <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp"  />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+            <MenuItem onClick={handleCloseUserMenu}>
+                <Typography onClick={logout} textAlign="center">logout</Typography>
+            </MenuItem>
+            </Menu>
+          </Box>
                 </Toolbar>
                 </Container>
             </AppBar>

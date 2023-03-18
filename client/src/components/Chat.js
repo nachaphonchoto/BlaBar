@@ -3,7 +3,6 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
@@ -19,27 +18,38 @@ import ScrollToBottom from "../ScrollToBottom ";
 import { useEffect, useState } from "react";
 import axios from 'axios';
 
-export default function Chat({ socket, username, room, id, image }) {
+export default function Chat({ socket, id}) {
   
 const [currentMessage, setCurrentMessage] = useState("");
 const [messageList, setMessageList] = useState([]);
+const [username, setUsername] = useState();
+const [image, setImage] = useState();
+const token = localStorage.getItem('token');
 
 const sendMessage = async () => {
   if (currentMessage !== "") {
     const messageData = {
-      room: room,
-      sender: username,
+      user: username,
       message: currentMessage,
       time: new Date(Date.now()),
       imageURL: image
     };
- 
+
+    const messagePayload = {
+      message: currentMessage,
+    };
 
     await socket.emit("send_message", messageData);
     setMessageList((list) => [...list, messageData]);
     setCurrentMessage("");
 
-    axios.post(`http://localhost:3001/api/chat/${room}`, messageData)
+    axios.post(`http://localhost:3001/api/chat/${id}`, 
+      messagePayload,
+      {
+        headers: {
+          'x-auth-token': token
+        }
+      } )
     .then(response => {
       console.log(response.data)
     })
@@ -70,20 +80,26 @@ useEffect(() => {
     });
 }, [id]);
 
+useEffect(() => {
+  axios.get(`http://localhost:3001/api/users`, {
+                headers: {
+                'x-auth-token': token
+                }
+            })
+    .then(response => {
+      setUsername(response.data.name);
+      setImage(response.data.avatar);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
 
   return (
     
     <React.Fragment>
       <CssBaseline />
       <Paper square sx={{ pb: "50px" }}>
-        {/* <Typography
-          variant="h5"
-          gutterBottom
-          component="div"
-          sx={{ p: 2, pb: 0 }}
-        >
-          {room}
-        </Typography> */}
       
       <ScrollToBottom>
         <List sx={{ mb: 2 }}>
@@ -93,7 +109,7 @@ useEffect(() => {
                 <ListItemAvatar>
                   <Avatar src={messageContent.imageURL}  />
                 </ListItemAvatar>
-                <ListItemText primary={messageContent.sender} secondary={messageContent.message} />
+                <ListItemText primary={messageContent.user} secondary={messageContent.message} />
               </ListItem>
             </React.Fragment>
           ))}

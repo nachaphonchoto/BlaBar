@@ -62,9 +62,7 @@ router.get('/', async (req, res) => {
 router.delete('/:id', auth, async (req, res) => {
   try {
     const chatId = await Topic.findById(req.params.id).select('chat');
-    const chatTest = chatId.chat
-    const chatPromises = chatTest.filter(chat => Chat.findByIdAndDelete(chat));
-    const chats = await Promise.all(chatPromises);
+    const chatPromises = chatId.chat.filter(chat => Chat.findByIdAndDelete(chat));
     const topic = await Topic.findByIdAndDelete(req.params.id);
     res.status(200).send("success");
   } catch (err) {

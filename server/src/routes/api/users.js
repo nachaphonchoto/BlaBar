@@ -3,8 +3,9 @@ const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');  
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
-const secret = require('../../config/default.json')
+const secret = require('../../config/default.json');
 const { check, validationResult } = require('express-validator');
+const auth = require("../../middleware/auth");
 
 const router = express.Router();
 
@@ -42,7 +43,7 @@ router.post('/', [
     user.password = await bcrypt.hash(password, salt); 
 
     await user.save();
-    const payload = { user: { id: user.id } };
+    const payload = { user: { id: user._id } };
 
     const token = jwt.sign(payload, secret.jwtSecret, {
       expiresIn: "1h"
@@ -50,6 +51,18 @@ router.post('/', [
       if (err) throw err;
       return res.json({ token });
     });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send('Server error');
+  }
+});
+
+router.get('/', auth , async (req, res) => {
+
+  try {
+    const user = await User.findById(req.user.id).select(["name","avatar"]);
+    res.status(200).json(user);
+
   } catch (err) {
     console.error(err.message);
     return res.status(500).send('Server error');

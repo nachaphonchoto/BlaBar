@@ -1,13 +1,11 @@
 import { Box } from "@mui/material"
 import Avatar from '@mui/material/Avatar';
-import { useCookies } from 'react-cookie';
 
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 
 export default function Detail ( {data} ) {
     
-    const [cookies, setCookie, removeCookie] = useCookies(['image']);
 
     console.log(data)
     return(
@@ -21,7 +19,7 @@ export default function Detail ( {data} ) {
                     >
                         <Avatar  
                         alt="Remy Sharp"
-                        src={cookies.image}
+                        // src={image}
                         sx={{ width: 80, height: 80 }} />
                         <div>
                            <h2>{data.title}</h2>   
